@@ -1,6 +1,7 @@
 // function to use d3 to graph density plots with preprocessed data
+// brushable added to help in disabling brushing for the DVN production mode
 
-function density(data, node, div) {
+function density(data, node, div, brushable) {
     var mydiv;
   
     if(div=="subset") {
@@ -138,6 +139,8 @@ if(mydiv=="#tab3"){
     .style("font-size", "12px")
     .text(data.varname);
     
+    // add brush if brushable
+    if(brushable){
     // add brush if subset
     if(mydiv=="#tab2") {
         plotsvg.append("text")
@@ -153,6 +156,7 @@ if(mydiv=="#tab3"){
         .call(brush)
         .selectAll("rect")
         .attr("height", height);
+    }
     }
     
     // add z lines and sliders setx
@@ -704,7 +708,7 @@ plotsvg.selectAll("rect")
 
 }
 
-function barsSubset(data, node, div) {
+function barsSubset(data, node, div, brushable) {
     // if untouched, set node.subsetrange to an empty array, meaning all values selected by default
     if(node.subsetrange[0]=="" & node.subsetrange[1]=="") {
         node.subsetrange=[];
@@ -814,6 +818,7 @@ function barsSubset(data, node, div) {
            else {return d.col;}
           })
     .on("click", function(){
+        if(brushable){ // disabling the brushing
         var selectMe = this;
         var selectName = this.getAttribute("name");
         if(this.parentNode.getAttribute("name")==myname.concat("subsetno")) {
@@ -838,7 +843,7 @@ function barsSubset(data, node, div) {
               if(node.subsetrange.length==0) {return("Selected: ".concat(xVals));}
               else {return("Selected: ".concat(node.subsetrange));}
               });
-        
+        } // end brushable
         });
     
     plotsvg.append("g")

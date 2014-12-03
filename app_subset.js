@@ -49,6 +49,7 @@ var allNodes = [];
 var nodes = [];
 var apicall = "";
 var metadataurl = "";
+var brushable = false; // set to true if you want to turn on brushing over the plots
 
 // read DDI metadata with d3:
 if (ddiurl) {
@@ -103,7 +104,7 @@ d3.json(pURL, function(error, json) {
                     sumStats[myType] = varStats[j].childNodes[0].nodeValue;
                 }
                
-               allNodes.push({id:i, reflexive: false, "name": valueKey[i], "labl": lablArray[i], data: [5,15,20,0,5,15,20], count: hold, "nodeCol":colors(i), "baseCol":colors(i), "strokeColor":selVarColor, "strokeWidth":"1", "varLevel":vars[i].attributes.intrvl.nodeValue, "minimum":sumStats.min, "median":sumStats.medn, "standardDeviation":sumStats.stdev, "mode":sumStats.mode, "valid":sumStats.vald, "mean":sumStats.mean, "maximum":sumStats.max, "invalid":sumStats.invd, "subsetplot":false, "subsetrange":["", ""],"setxplot":false, "setxvals":["", ""], "grayout":false});
+               allNodes.push({id:i, reflexive: false, "name": valueKey[i], "varid":vars[i].attributes.ID.nodeValue, "labl": lablArray[i], data: [5,15,20,0,5,15,20], count: hold, "nodeCol":colors(i), "baseCol":colors(i), "strokeColor":selVarColor, "strokeWidth":"1", "varLevel":vars[i].attributes.intrvl.nodeValue, "minimum":sumStats.min, "median":sumStats.medn, "standardDeviation":sumStats.stdev, "mode":sumStats.mode, "valid":sumStats.vald, "mean":sumStats.mean, "maximum":sumStats.max, "invalid":sumStats.invd, "subsetplot":false, "subsetrange":["", ""],"setxplot":false, "setxvals":["", ""], "grayout":false});
                };
                
                scaffolding();
@@ -227,12 +228,6 @@ function layout() {
         panelPlots();
         });
     
-    
-    d3.select(window)
-    .on('click',function(){  //NOTE: all clicks will bubble here unless event.stopPropagation()
-        
-        });
-    
 } // end layout
 
 
@@ -265,26 +260,28 @@ function panelPlots() {
     var dataArray = [];
     var varArray = [];
     var idArray = [];
+    var varidArray = [];
     
     for(var j=0; j < nodes.length; j++ ) {
         dataArray.push({varname: nodes[j].name, properties: preprocess[nodes[j].name]});
-        varArray.push(nodes[j].name); //.name.replace(/\(|\)/g, "")
+        varArray.push(nodes[j].name);
         idArray.push(nodes[j].id);
+        varidArray.push(nodes[j].varid);
     }
     
     for (var i = 0; i < varArray.length; i++) {
         if (dataArray[i].properties.type === "continuous" & allNodes[idArray[i]].subsetplot==false) {
             allNodes[idArray[i]].subsetplot=true;
-            density(dataArray[i], allNodes[idArray[i]], "subset");
+            density(dataArray[i], allNodes[idArray[i]], "subset", brushable);
         }
         else if (dataArray[i].properties.type === "bar" & allNodes[idArray[i]].subsetplot==false) {
             allNodes[idArray[i]].subsetplot=true;
-            barsSubset(dataArray[i], allNodes[idArray[i]], "subset");
+            barsSubset(dataArray[i], allNodes[idArray[i]], "subset", brushable);
         }
     }
     
     // this is where apicall is built
-    apicall=dataurl+"?vars="+varArray.toString();
+    apicall=dataurl+"?vars="+varidArray.toString();
     
     // update the plots in subset tab
     d3.select("#tab2").selectAll("svg")
