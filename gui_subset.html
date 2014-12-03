@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>TwoRavens</title>
+        
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+        
+        <link rel="stylesheet" href="app.css">
+           
+        <script type="text/javascript" src="jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+        
+        <script type="text/javascript" src="d3.v3.min.js"></script>
+        <script type="text/javascript" src="plots.js"></script>
+  </head>
+  
+
+  <body>
+        <div id="leftpanel" class="sidepanel container clearfix">
+            
+            <div class="panel-heading text-center" id="leftpaneltitle">
+                <h3 class="panel-title">Data File</h3>
+            </div>
+            
+            <div class="btn-toolbar" role="toolbar" style="margin-left:.5em;margin-top:.5em;">
+                <div class="btn-group" style="margin-left:0;">
+                    <button type="button" class="btn active" id="btnVariables" onclick="tabLeft('tab1');">Variables</button>
+                    <button type="button" class="btn btn-default" id="btnSubset" onclick="tabLeft('tab2');">Subset</button>
+                    <button type="button" class="btn btn-default" id="btnDownload" onclick="tabLeft('tab3');">Download</button>
+                </div>
+            </div>
+            <div class="panel-heading text-left" id="txtSubset" style="display:none;">
+                <p style="padding:.5em 1em;">To select a subset, brush the plots. The subset will be the intersection of brushed values.</p>
+            </div>
+            <div class="row-fluid">
+                <div id="leftpanelcontent">
+                    <div id="leftContentArea" style="overflow: scroll; height:488px;">
+                        <div id="tab1" style="display:block;padding:6px 6px;text-align:center"></div>
+                        <div id="tab2" style="display:none; margin-top:.5em;">
+                        </div>
+                        <div id="tab3">
+                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav id="option" class="navbar navbar-default" role="navigation">
+                <div>
+                    <div class="navbar-header" onmouseover="about();" onmouseout="closeabout();" >
+                        <img src="images/TwoRavens.png" alt="TwoRavens" width="100" style="margin-left:2em;margin-top:-0.5em">
+                            <div id="about" class="panel panel-default" style="position:relative; left:140px; width:380px; display:none; z-index:50;">
+                                <div class="panel-body"> </div>
+                            </div>
+                            </div>
+                    
+                </div>
+                </div>
+            </nav>
+        </div>
+
+
+<script>
+    var myurl=window.location.toString();
+    var fileid="";
+    var cindex=0;
+    if (myurl.indexOf("dfId=") > 0) {
+        fileid=myurl.substring(myurl.indexOf("dfId=")+5);
+        cindex=fileid.indexOf("&");
+        if (cindex > 0) {
+            fileid=fileid.substring(0,cindex);
+        };
+    };
+var hostname="";
+if (myurl.indexOf("host=") > 0) {
+    hostname=myurl.substring(myurl.indexOf("host=")+5);
+    cindex=hostname.indexOf("&");
+    if (cindex > 0) {
+        hostname=hostname.substring(0,cindex);
+    };
+};
+var ddiurl="";
+if (myurl.indexOf("ddiurl=") > 0) {
+    ddiurl=myurl.substring(myurl.indexOf("ddiurl=")+7);
+    cindex=ddiurl.indexOf("&");
+    if (cindex > 0) {
+        ddiurl=ddiurl.substring(0,cindex);
+    };
+};
+var dataurl="";
+if (myurl.indexOf("dataurl=") > 0) {
+    dataurl=myurl.substring(myurl.indexOf("dataurl=")+8);
+    cindex=dataurl.indexOf("&");
+    if (cindex > 0) {
+        dataurl=dataurl.substring(0,cindex);
+    };
+};
+
+
+console.log("fileid: "+fileid);
+console.log("hostname: "+hostname);
+console.log("ddiurl: "+ddiurl);
+console.log("dataurl: "+dataurl);
+</script>
+
+<script src="app_subset.js">
+</script>
+
+  </body>
+</html>
+

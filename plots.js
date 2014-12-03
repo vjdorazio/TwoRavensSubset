@@ -112,7 +112,7 @@ if(mydiv=="#tab3"){
     .append("svg")
     .attr("id", function(){
           var myname = data.varname.toString();
-          myname = myname.replace(/\(|\)/g, "");
+          //myname = myname.replace(/\(|\)/g, "");
           return myname.concat("_",mydiv.substr(1), "_", node.id);
           })
     .style("width", width + margin.left + margin.right) //setting height to the height of #main.left
@@ -446,7 +446,7 @@ var plotsvg = d3.select(mydiv)
     .append("svg")
     .attr("id", function(){
           var myname = data.varname.toString();
-          myname = myname.replace(/\(|\)/g, "");
+          //myname = myname.replace(/\(|\)/g, "");
           return myname.concat("_",mydiv.substr(1), "_", node.id);
           })
     .style("width", width + margin.left + margin.right) //setting height to the height of #main.left
@@ -704,7 +704,7 @@ plotsvg.selectAll("rect")
 
 }
 
-function barsSubset(data, node) {
+function barsSubset(data, node, div) {
     // if untouched, set node.subsetrange to an empty array, meaning all values selected by default
     if(node.subsetrange[0]=="" & node.subsetrange[1]=="") {
         node.subsetrange=[];
@@ -716,7 +716,7 @@ function barsSubset(data, node) {
     
     // Variable name
     var myname = data.varname.toString();
-    myname = myname.replace(/\(|\)/g, "");
+    //myname = myname.replace(/\(|\)/g, "");
 
     
     // Data
