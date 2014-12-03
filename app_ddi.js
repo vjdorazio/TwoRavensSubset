@@ -2148,6 +2148,7 @@ function panelPlots() {  // VJD: some optimization added 7/25/14
           var myname = regstr.exec(this.id);
           var nodeid = myname[2];
           myname = myname[1];
+
           var j = varArray.indexOf(myname);
           
         if(j == -1) {

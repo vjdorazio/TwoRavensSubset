@@ -103,7 +103,7 @@ text.id {
     height:600px;
 }
 #main.svg-leftpanel svg, #main.svg-rightpanel svg {width: calc(100% - 300px);}
-#main.svg-leftpanel.svg-rightpanel svg {width: calc(100% - 300px);}
+#main.svg-leftpanel.svg-rightpanel svg {width: calc(100% - 300px);} 
 /* #main.svg-marg-left svg {margin-left:0px;}
 #main.svg-marg-right svg {margin-right:0px;} */
 
@@ -179,7 +179,6 @@ div.sidepanel div.panelbar span {
 #main {
     border:1px solid #ADADAD;
     width: 100%;
-    margin-bottom:160px;
     position: relative;
 }
 
