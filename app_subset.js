@@ -118,10 +118,13 @@ d3.json(pURL, function(error, json) {
 // functions
 
 function scaffolding() {
+    var count = 0;
     d3.select("#tab1").selectAll("p")
     .data(valueKey)
     .enter()
     .append("p")
+    .style("width", "33%")
+    .style("float", "left")
     .attr("id",function(d){
           return d.replace(/\W/g, "_"); // replace non-alphanumerics for selection purposes
           }) // perhapse ensure this id is unique by adding '_' to the front?
